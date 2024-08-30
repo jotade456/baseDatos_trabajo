@@ -1,3 +1,6 @@
+from vista_proyecto import Vista
+from modelo_proyecto import conexion_BD
+
 class Controlador:
     def __init__(self):
         self.modelo = conexion_BD()
