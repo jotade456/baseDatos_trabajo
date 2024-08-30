@@ -20,7 +20,7 @@ class CatalogoApp:
         marco_categorias = tk.Frame(root, bd=2, relief="groove")
         marco_categorias.pack(fill="x")
 
-        categorias = ["Registrar Compra", "Gestión de Productos", "Opiniones y Reseñas", "Soporte y Contacto"]
+        categorias = ["Registrar Compra", "mas vendidos", "Opiniones y Reseñas", "Soporte y Contacto"]
         for categoria in categorias:
             if categoria == "Registrar Compra":
                 btn_categoria = tk.Button(marco_categorias, text=categoria)
