@@ -35,15 +35,18 @@ class CatalogoApp:
         
         tk.Button(self.root, text="Ver Informe", command=self.leer_deserializado, font=("Arial", 12), bg="#32cd32", fg="white").pack(pady=10)
         
+        tk.Button(self.root, text="Editar producto", command=self.editar_producto, font=("Arial", 12), bg="#32cd32", fg="white").pack(pady=10)
+
+        tk.Button(self.root, text="Borrar Registro", command=self.eliminar_producto, font=("Arial", 12), bg="#ff0000", fg="white").pack(pady=10)
+
         titulo_catalogo = tk.Label(self.root, text="Catálogo de Productos", font=("Arial", 14))
         titulo_catalogo.pack(pady=10)
 
-        
         self.frame_catalogo = tk.Frame(self.root)
         self.frame_catalogo.pack(pady=10)
 
     def crear_botones_acciones(self, marco_categorias):
-        acciones = ["Registrar Compra", "Más Vendidos", "Ver informe productos", "Soporte y Contacto"]
+        acciones = ["Registrar Compra", "Ver informe productos"]
         for accion in acciones:
             btn_categoria = tk.Button(marco_categorias, text=accion, command=lambda c=accion: self.boton_accion(c))
             btn_categoria.pack(side="left", padx=10, pady=10)
@@ -83,7 +86,22 @@ class CatalogoApp:
 
     def actualizar_catalogo(self):
         self.mostrar_productos()
-        
+
+    def editar_producto(self):
+        self.controlador.abrir_edicion()
+
+    def eliminar_producto(self):
+        id_producto = simpledialog.askinteger("Eliminar Producto", "Ingrese el ID del producto a eliminar:")
+        if id_producto:
+            confirmacion = messagebox.askyesno("Confirmar Eliminación", f"¿Está seguro de que desea eliminar el producto con ID {id_producto}?")
+            if confirmacion:
+                eliminado = self.controlador.eliminar_producto_por_id(id_producto)
+                if eliminado:
+                    messagebox.showinfo("Producto Eliminado", f"El producto con ID {id_producto} ha sido eliminado.")
+                    self.actualizar_catalogo()
+                else:
+                    messagebox.showerror("Error", f"No se encontró el producto con ID {id_producto}.")
+
     def leer_deserializado(self):
         datoArchivo = simpledialog.askstring("Digitar", "Digite nombre del archivo")
         if datoArchivo:
@@ -92,7 +110,7 @@ class CatalogoApp:
 
     def actualizar_periodicamente(self):
         self.actualizar_catalogo()
-        self.root.after(30000, self.actualizar_periodicamente)
+        self.root.after(15000, self.actualizar_periodicamente)
 
     def iniciar_catalogo(self):
         self.root.mainloop()
