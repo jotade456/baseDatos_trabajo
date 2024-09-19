@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import simpledialog, messagebox
+from tkinter import ttk
 
 class CatalogoApp:
     def __init__(self, controlador):
@@ -29,8 +30,6 @@ class CatalogoApp:
 
         self.crear_botones_acciones(marco_categorias)
 
-        tk.Button(self.root, text="Filtrar por Categoría", command=self.filtrar_por_categoria, font=("Arial", 12), bg="#ff6347", fg="white").pack(pady=10)
-        
         tk.Button(self.root, text="Guardar Informe", command=self.guardar_informe, font=("Arial", 12), bg="#4682b4", fg="white").pack(pady=10)
         
         tk.Button(self.root, text="Ver Informe", command=self.leer_deserializado, font=("Arial", 12), bg="#32cd32", fg="white").pack(pady=10)
@@ -39,11 +38,23 @@ class CatalogoApp:
 
         tk.Button(self.root, text="Borrar Registro", command=self.eliminar_producto, font=("Arial", 12), bg="#ff0000", fg="white").pack(pady=10)
 
+        # Combobox para filtrar por categoría
+        self.combo_categoria = ttk.Combobox(self.root, state="readonly")
+        self.combo_categoria.pack(pady=10)
+        self.cargar_categorias()
+
+        tk.Button(self.root, text="Filtrar por Categoría", command=self.filtrar_por_categoria, font=("Arial", 12), bg="#ff6347", fg="white").pack(pady=10)
+        
         titulo_catalogo = tk.Label(self.root, text="Catálogo de Productos", font=("Arial", 14))
         titulo_catalogo.pack(pady=10)
 
         self.frame_catalogo = tk.Frame(self.root)
         self.frame_catalogo.pack(pady=10)
+
+    def cargar_categorias(self):
+        categorias = self.controlador.modelo_catalogo.obtener_productos()  # Obtener productos
+        categorias_unicas = set(producto[4] for producto in categorias)  # la categoría está en el índice 4
+        self.combo_categoria['values'] = list(categorias_unicas)  # Establecer categorías únicas en el Combobox
 
     def crear_botones_acciones(self, marco_categorias):
         acciones = ["Registrar Compra", "Ver informe productos"]
@@ -62,10 +73,10 @@ class CatalogoApp:
             pass
 
     def guardar_informe(self):
-        self.controlador.guardar_informe()
+        self.controlador.abrir_vista_json()
 
     def filtrar_por_categoria(self):
-        categoria = simpledialog.askstring("Filtrar por Categoría", "Ingrese la categoría para filtrar:")
+        categoria = self.combo_categoria.get()  # Obtener categoría seleccionada
         if categoria:
             self.mostrar_productos(categoria)
 
@@ -73,7 +84,11 @@ class CatalogoApp:
         for child in self.frame_catalogo.winfo_children():
             child.destroy()
 
-        productos = self.controlador.modelo_catalogo.obtener_productos(categoria)
+        if categoria:
+            productos = self.controlador.modelo_catalogo.obtener_productos_por_categoria(categoria)
+        else:
+            productos = self.controlador.modelo_catalogo.obtener_productos()
+            
         for producto in productos:
             cuadro_producto = tk.Frame(self.frame_catalogo, bd=2, relief="groove", padx=10, pady=10)
             cuadro_producto.pack(side="left", padx=10)
@@ -104,9 +119,12 @@ class CatalogoApp:
 
     def leer_deserializado(self):
         datoArchivo = simpledialog.askstring("Digitar", "Digite nombre del archivo")
-        if datoArchivo:
-            texto = self.controlador.cargar_informe() 
-            messagebox.showinfo("Contenido del archivo", texto)
+        try:
+            if datoArchivo:
+                texto = self.controlador.deserializar(datoArchivo)
+                messagebox.showinfo("Contenido del archivo", texto)
+        except:
+            messagebox.showerror("Error", "El nombre del archivo no es válido")
 
     def actualizar_periodicamente(self):
         self.actualizar_catalogo()
@@ -114,7 +132,4 @@ class CatalogoApp:
 
     def iniciar_catalogo(self):
         self.root.mainloop()
-
-
-
 
