@@ -29,7 +29,7 @@ class CatalogoUsuario:
         marco_categorias.pack(fill="x")
 
         
-        self.crear_botones_acciones(marco_categorias)
+        
 
         titulo_catalogo = tk.Label(self.root, text="Catálogo de Productos", font=("Arial", 14))
         titulo_catalogo.pack(pady=10)
@@ -37,33 +37,19 @@ class CatalogoUsuario:
         
         self.frame_catalogo = tk.Frame(self.root)
         self.frame_catalogo.pack(pady=10)
-        
-        
-        
 
-    def crear_botones_acciones(self, marco_categorias):
-        acciones = ["Ver informe productos", "Soporte y Contacto"]
-        for accion in acciones:
-            btn_categoria = tk.Button(marco_categorias, text=accion, command=lambda c=accion: self.boton_accion(c))
-            btn_categoria.pack(side="left", padx=10, pady=10)
-
-    def boton_accion(self, accion):
-        if accion == "Ver informe productos":
-            self.controlador.abrir_vista_informe()
-        elif accion == "Soporte y Contacto":
-            pass
+    
 
 
-    def filtrar_por_categoria(self):
-        categoria = simpledialog.askstring("Filtrar por Categoría", "Ingrese la categoría para filtrar:")
-        if categoria:
-            self.mostrar_productos(categoria)
 
     def mostrar_productos(self, categoria=None):
         for child in self.frame_catalogo.winfo_children():
             child.destroy()
 
-        productos = self.controlador.modelo_catalogo.obtener_productos(categoria)
+        
+        
+        productos = self.controlador.modelo_catalogo.obtener_productos()
+            
         for producto in productos:
             cuadro_producto = tk.Frame(self.frame_catalogo, bd=2, relief="groove", padx=10, pady=10)
             cuadro_producto.pack(side="left", padx=10)

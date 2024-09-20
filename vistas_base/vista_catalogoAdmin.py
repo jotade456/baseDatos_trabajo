@@ -57,20 +57,18 @@ class CatalogoApp:
         self.combo_categoria['values'] = list(categorias_unicas)  # Establecer categorías únicas en el Combobox
 
     def crear_botones_acciones(self, marco_categorias):
-        acciones = ["Registrar Compra", "Ver informe productos"]
+        acciones = ["Registrar producto", "Ver informe productos"]
         for accion in acciones:
             btn_categoria = tk.Button(marco_categorias, text=accion, command=lambda c=accion: self.boton_accion(c))
             btn_categoria.pack(side="left", padx=10, pady=10)
 
     def boton_accion(self, accion):
-        if accion == "Registrar Compra":
+        if accion == "Registrar producto":
             self.controlador.abrir_registro()
         elif accion == "Más Vendidos":
             pass
         elif accion == "Ver informe productos":
             self.controlador.abrir_vista_informe()
-        elif accion == "Soporte y Contacto":
-            pass
 
     def guardar_informe(self):
         self.controlador.abrir_vista_json()
