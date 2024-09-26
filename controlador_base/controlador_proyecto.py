@@ -3,7 +3,7 @@ from vistas_base.vista_catalogoAdmin import CatalogoApp
 from vistas_base.vista_catalogoUsuario import CatalogoUsuario
 from modelos_base.modelo_proyecto import conexion_BD
 from modelos_base.modelo_catalogoAdmin import RegistrarProductos
-from vistas_base.vista_registro import AbrirRegistroProducto
+from vistas_base.vista_registro import abrir_registro_producto
 from modelos_base.modelo_json import crear_archivo_informe
 from vistas_base.vista_informe import InformeProductos
 from vistas_base.vista_editar import edicion
@@ -54,7 +54,7 @@ class Controlador:
 
 
     def abrir_registro(self):
-        self.registro_producto = AbrirRegistroProducto(self)
+        self.registro_producto = abrir_registro_producto(self)
         self.registro_producto.iniciar_programa()
 
 
