@@ -126,7 +126,7 @@ class CatalogoApp:
 
     def actualizar_periodicamente(self):
         self.actualizar_catalogo()
-        self.root.after(15000, self.actualizar_periodicamente)
+        self.root.after(9000, self.actualizar_periodicamente)
 
     def iniciar_catalogo(self):
         self.root.mainloop()
