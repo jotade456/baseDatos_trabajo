@@ -37,7 +37,7 @@ class abrir_registro_producto:
 
         tk.Label(contenedor_principal, text="Categoría del Producto:", bg="#ffcccb", font=fuente).grid(row=4, column=0, sticky="w", pady=5)
 
-        tk.Button(contenedor_principal, text="Acción", command=lambda: self.seleccionar_categoria("Acción"), font=fuente, bg="#ffcccb").grid(row=4, column=1, pady=5, sticky="ew")
+        tk.Button(contenedor_principal, text="Acción", command=lambda: self.seleccionar_categoria("Accion"), font=fuente, bg="#ffcccb").grid(row=4, column=1, pady=5, sticky="ew")
         tk.Button(contenedor_principal, text="Aventura", command=lambda: self.seleccionar_categoria("Aventura"), font=fuente, bg="#ffcccb").grid(row=5, column=1, pady=5, sticky="ew")
         tk.Button(contenedor_principal, text="Deportes", command=lambda: self.seleccionar_categoria("Deportes"), font=fuente, bg="#ffcccb").grid(row=6, column=1, pady=5, sticky="ew")
 
