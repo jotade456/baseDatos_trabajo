@@ -5,7 +5,7 @@ class Vista:
     def __init__(self, controlador):
         self.root = tk.Tk()
         self.root.title("Inicio de Sesión")
-        self.root.geometry("350x250")
+        self.root.geometry("350x350")
         self.root.configure(bg="lightgray")
         self.controlador = controlador
 
